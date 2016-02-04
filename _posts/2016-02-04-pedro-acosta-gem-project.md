@@ -55,7 +55,7 @@ What is being done here is, the app is going to take the input the user enters i
       opening_statement
     end
 
-The if, elsif, and else statement is what allowed the user the app to display certain information depending on the input the user gave it. So in the scenario the user said yes, it will display the information it asked for and if the user said no, it will restart the app. 
+The if, elsif, and else statement is what allowed the app to display certain information depending on the input the user gave it. So in the scenario the user said yes, it will display the information it asked for and if the user said no, it will restart the app. 
 
       puts "Do you want to bet on this game?"
       input = gets.chomp
@@ -69,11 +69,11 @@ Going deeper in this method. Inside the first if statement included another if s
 
       puts "Do you want to bet on this game?"
 
-Depending on the answer the user gave, if input was yes it would call the bet method, which basically allowed the user to bet on the game or person and if input was no, it would force the user to start from the beginning of this method; or in other worlds this partically sport.
+Depending on the answer the user gave, if input was yes it would call the bet method, which basically allowed the user to bet on the game or person and if input was no, it would force the user to start from the beginning of this method; or in other worlds this particular sport.
 
-I used the same concept with the other methods throughout this file. Even though it didnt seem too abstract to me, it did what I originally intended the project to do. I added too much puts but I didnt want the user to fill limited as to what he can do with this app.
+I used the same concept with the other methods throughout this file. Even though it didnt seem too abstract for me, it did what I originally intended the project to do. I added too much puts but I didnt want the user to fill limited as to what he can do with this app.
 
-This project was pretty fun. Took me a couple of days due to certain code not responding the way I wanted it to, but I learned a lot. 
+This project was pretty fun. Took me a couple of days to complete due to certain codes which was not responding the way I wanted it to, but I learned a lot. 
 
 Here is the URL for this project https://github.com/pacosta613/vegas_odds.git.
 
