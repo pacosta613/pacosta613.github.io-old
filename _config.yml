@@ -1,2 +1,3 @@
 name: Pedro Acosta, Flatiron, Learn student
 markdown: kramdown
+permalink: /blog/:year/:month/:day/:title
