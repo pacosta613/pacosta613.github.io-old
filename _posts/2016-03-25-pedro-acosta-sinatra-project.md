@@ -125,15 +125,17 @@ Here I iterated each player through its team. It then will display each players 
       end
 
 I also tested it out in my leagues show view by applying the same logic.
-  ```ruby
+  
       Leagues show view:
-
+      
+```ruby
         <ul>
           <% @league.teams.each do |team| %>
             <li><a href="/teams/<%= team.id %>"><%= team.name %></a></li>
           <% end%>
         </ul>
-  ```
+```
+
 This project was really fun. Especially when I was debugging my player objects and figuring out why it didn’t want to save its team id. It took me a week just to figure that out so that wasn't really fun. I learned a lot and took risks of my code breaking. I hope someone can make this application useful for themselves.
 
 If you want to interact with my application, here's the github page and clone this project.
