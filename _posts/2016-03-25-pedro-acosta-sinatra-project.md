@@ -13,6 +13,7 @@ My sinatra project is pretty simple. I allow a user to make an account with the 
 
 If you take a look at my code, you can see that many of the controllers are very similar to each other and follow the same concepts and patterns. Getting each user to create leagues, teams, and players was pretty simple. To be honest, it was really easy. My struggles came down to saving each created player to their respected team. Same goes with the different teams to its league. I’m going to show you what I mean by that in the following code.
 
+```ruby
           [#<Player:0x007fb97c2c68d8
           id: 1,
           name: "Pedro Acosta",
@@ -34,6 +35,7 @@ If you take a look at my code, you can see that many of the controllers are very
           league_id: nil,
           jersey_number: 15,
           position: "Catcher">
+```
 
 As you can see, there are three player objects I created. Did you notice what is wrong with these objects? Well, what’s right about these player objects is that it stored the name, jersey number, and position of each players. What it doesn’t show is the players team id. The return is "nil". 
 
@@ -42,7 +44,7 @@ For those of you who haven't realize yet, I'm using the programming language Rub
 The reason it returned nil is because nothing was saved into that object. Which means that my player object didn’t save its team it was assigned to. There lies the problem. I have players object and no way to verify who it belongs to. So what was happening was every team I created, when I was to click on their roster, it will show all of the saved player objects. It didn't matter what team it was. With the help of the learn developers, I was able to find a solution. 
 
           Players Controller:
-
+```ruby
         post '/players/:id' do 
           @player = Player.find_by_id(params[:id])
           @team = Team.find_by(params[:team_id])
@@ -66,26 +68,28 @@ The reason it returned nil is because nothing was saved into that object. Which 
           redirect "/players/#{@player.id}"
 
         end
-
+```
 In my first post route I added two lines and the second post I added one.
 
+```ruby
       @team = Team.find_by(params[:team_id])
       @player.team = Team.find_by(params[:team_id])
+```
 
 The first line above is assigning @team instant variable to find the class team by its id. The second line is grabbing the first line and combining it with the @player instant variable. So the @player is looking for its team by its team id.
 I then had to make some adjustments to my team show view and tested it out. 
-
+```ruby
        <ul>
         <% @team.players.each do |player| %>
           <li><%= player.name %>
           <%= player.position %> <%= player.jersey_number %></a></li>
         <% end%>
       </ul>
-
+```
 Here I iterated each player through its team. It then will display each players name, position, and jersey number. It worked! Great news was I was able to mimic this simple pattern on to my teams and league controllers. 
-
+  
     Teams controller:
-
+```ruby
     post '/teams/:id' do 
       @team = Team.find_by_id(params[:id])
       @league = League.find_by_id(params[:league_id])
@@ -104,9 +108,9 @@ Here I iterated each player through its team. It then will display each players 
 
       redirect "/teams/#{@team.id}"
     end
-
+```
     Leagues controller:
-
+```ruby
       post '/leagues' do 
         @league = League.new
         @league.name = params[:name]
@@ -123,18 +127,18 @@ Here I iterated each player through its team. It then will display each players 
 
         redirect "/teams/#{@team.id}"
       end
-
+```
 I also tested it out in my leagues show view by applying the same logic.
   
       Leagues show view:
-      
+
 ```ruby
         <ul>
           <% @league.teams.each do |team| %>
             <li><a href="/teams/<%= team.id %>"><%= team.name %></a></li>
           <% end%>
         </ul>
-```
+``` 
 
 This project was really fun. Especially when I was debugging my player objects and figuring out why it didn’t want to save its team id. It took me a week just to figure that out so that wasn't really fun. I learned a lot and took risks of my code breaking. I hope someone can make this application useful for themselves.
 
