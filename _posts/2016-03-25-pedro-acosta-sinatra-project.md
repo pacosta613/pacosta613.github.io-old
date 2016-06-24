@@ -78,6 +78,7 @@ In my first post route I added two lines and the second post I added one.
 
 The first line above is assigning @team instant variable to find the class team by its id. The second line is grabbing the first line and combining it with the @player instant variable. So the @player is looking for its team by its team id.
 I then had to make some adjustments to my team show view and tested it out. 
+
 ```ruby
        <ul>
         <% @team.players.each do |player| %>
@@ -86,9 +87,11 @@ I then had to make some adjustments to my team show view and tested it out.
         <% end%>
       </ul>
 ```
+
 Here I iterated each player through its team. It then will display each players name, position, and jersey number. It worked! Great news was I was able to mimic this simple pattern on to my teams and league controllers. 
   
     Teams controller:
+
 ```ruby
     post '/teams/:id' do 
       @team = Team.find_by_id(params[:id])
@@ -110,6 +113,7 @@ Here I iterated each player through its team. It then will display each players 
     end
 ```
     Leagues controller:
+
 ```ruby
       post '/leagues' do 
         @league = League.new
@@ -128,6 +132,7 @@ Here I iterated each player through its team. It then will display each players 
         redirect "/teams/#{@team.id}"
       end
 ```
+
 I also tested it out in my leagues show view by applying the same logic.
   
       Leagues show view:
