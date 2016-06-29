@@ -149,6 +149,6 @@ This project was really fun. Especially when I was debugging my player objects a
 
 If you want to interact with my application, here's the github page and clone this project.
 
-https://github.com/pacosta613/pacosta613.github.io.git
+https://github.com/pacosta613/mabl_2.git
 
 Have Fun! Learn, Love, Code.
