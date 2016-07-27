@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Jquery project"
-date: 2016-06-24
+date: 2016-07-27
 ---
 
 Hey guys! This is going to be a short blog but I will try to be as descriptive as possible. It took about less than a week for me to complete this project. I pretty much had to implement some jquery and ajax to my previous rails project. It was a lot of fun and I learned a lot. Lets get to it. 
@@ -51,4 +51,58 @@ e.preventDefault();
 
 ```
 
-Once this event is triggered, we can starting getting the information needed using a AJAX request. 
+Once this event is triggered, we can starting getting the information needed using a AJAX request. Once the AJAX request is done, we append the the response to the div class ".ingredients". This completes the form submission and now we'll go over a bit about the server side of the response.
+
+The form that is being submitted is located in the recipes show page. That form was to add ingredients. Now that form is functional, I decided to render the new ingredients to the recipes show page without the page reloading. I wrote two functions to make this render correctly but will explain what I did one at a time. 
+
+```ruby
+
+function loadIngredients(){
+  $('#recipe_ingredients').html('<h3>Ingredients:</h3>')
+
+  $.ajax({
+    method: 'GET',
+    dataType: 'json',
+    url: this.action
+  }).done(function(response){
+    grabIngredients(response);
+  });
+};
+
+```
+
+My loadIngredients function starts off with some JQuery which renders "Ingredients:" before the actual lists. I then make a AJAX request to grab the response. I used a get request to send data to my rails backend and this.action just refers to the current URL. When it recieves the response in JSON, I called grabIngredients function to parse the response.
+
+```ruby
+
+function grabIngredients(data){ 
+  var ingredients = data["ingredients"];
+  var names = [];
+  var nameId = [];
+  var orderIngredients = "<ol>";
+  
+  for (var i = 0; i < ingredients.length; i++) {
+    names.push(ingredients[i]["name"]);
+    nameId.push(ingredients[i]["id"]);
+  }
+  for (var i = 0; i < nameId.length; i++) {
+    orderIngredients += "<li>" + names[i] + "</li>";
+    
+  }
+  orderIngredients += "</ol>";
+ $(".ingredients").html(orderIngredients);
+}
+
+```
+
+Now that we have the response from our AJAX request, we can now parse the data. We will parse that data by looping through each ingredient, pushing the name and its id to an empty array. We then add another loop whichs goes through each ingredients id in nameId array, which renders the name of ingredients in a list. Finally we append each ingredient to the div class ".ingredients" in our recipes show page.
+
+We now have the ability to add ingredients to our recipe show page without having the page reload. It renders perfectly and pretty fast.
+
+I'm still not really confident in my ability to code but I'm learning a lot and continue to improve. I hope you guys learned something from this blog!
+
+If you want to interact with my application, here's the github page repo.
+
+https://github.com/pacosta613/recipe-project-jquery
+
+Have Fun! Learn, Love, Code.
