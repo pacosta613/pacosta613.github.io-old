@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails project"
+title: "Jquery project"
 date: 2016-06-24
 ---
 
