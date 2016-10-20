@@ -10,7 +10,15 @@ HTML and CSS are both considered front-end development. What front-end developme
 
 HTML
 
-HTML stands for Hyper Text Markup Language. HTML is the language use to structure yourwebsite along with all the contents in it. It consists of short code short codes typed into a text-file by the user. HTML tells the web browser how to display the content and images to the user. The tools in HTML are called tags. Tags are tools in HTML that allows the user to add images, videos and audio clips.
+HTML stands for Hyper Text Markup Language. HTML is the language use to structure yourwebsite along with all the contents in it. It consists of short code short codes typed into a text-file by the user. HTML tells the web browser how to display the content and images to the user. The tools in HTML are called tags. Tags are tools in HTML that allows the user to add images, videos and audio clips. An example of what one of the HTML tags:
+
+
+```ruby
+
+<h2>Hello World!</h2>
+<p>This is going to be a long paragraph</p>
+
+```
 
 CSS
 
