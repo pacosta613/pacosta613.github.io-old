@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title>Jquery project</title>
+			<!-- link to main stylesheet -->
+			<link rel="stylesheet" type="text/css" href="/css/main.css">
+		</head>
+		<body>
+			<nav>
+	    		<ul>
+	        		<li><a href="/">Home</a></li>
+		        	<li><a href="/about">About</a></li>
+	        		<li><a href="/blog">Blog</a></li>
+	    		</ul>
+			</nav>
+			<div class="container">
+			
+			<h1>Jquery project</h1>
+<p class="meta">27 Jul 2016</p>
+
+<div class="post">
+  <p>Hey guys! This is going to be a short blog but I will try to be as descriptive as possible. It took about less than a week for me to complete this project. I pretty much had to implement some jquery and ajax to my previous rails project. It was a lot of fun and I learned a lot. Lets get to it.</p>
+
+<p>If you don’t already know, this was a recipe app. It pretty much allows users to create a recipes, along with it’s ingredients. It also allows users to comment on each recipe and rate each recipe. So, there are five requirements to complete this project,</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>
+<span class="mi">1</span><span class="o">.</span> <span class="no">Must</span> <span class="n">render</span> <span class="n">one</span> <span class="n">show</span> <span class="n">page</span> <span class="n">and</span> <span class="n">one</span> <span class="n">index</span> <span class="n">page</span> <span class="n">via</span> <span class="n">jQuery</span> <span class="n">and</span> <span class="n">an</span> <span class="no">Active</span> <span class="no">Model</span> <span class="no">Serialization</span> <span class="no">JSON</span> <span class="no">Backend</span><span class="o">.</span>
+<span class="mi">2</span><span class="o">.</span> <span class="no">Must</span> <span class="n">use</span> <span class="n">your</span> <span class="no">Rails</span> <span class="n">api</span> <span class="n">to</span> <span class="n">create</span> <span class="n">a</span> <span class="n">resource</span> <span class="n">and</span> <span class="n">render</span> <span class="n">the</span> <span class="n">response</span> <span class="n">without</span> <span class="n">a</span> <span class="n">page</span> <span class="n">refresh</span><span class="o">.</span>
+<span class="mi">3</span><span class="o">.</span> <span class="no">The</span> <span class="n">rails</span> <span class="no">API</span> <span class="n">must</span> <span class="n">reveal</span> <span class="n">at</span> <span class="n">least</span> <span class="n">one</span> <span class="n">has</span><span class="o">-</span><span class="n">many</span> <span class="n">relationship</span> <span class="k">in</span> <span class="n">the</span> <span class="no">JSON</span> <span class="n">that</span> <span class="n">is</span> <span class="k">then</span> <span class="n">rendered</span> <span class="n">to</span> <span class="n">the</span> <span class="n">page</span><span class="o">.</span>
+<span class="mi">4</span><span class="o">.</span> <span class="no">Must</span> <span class="n">have</span> <span class="n">at</span> <span class="n">least</span> <span class="n">one</span> <span class="n">link</span> <span class="n">that</span> <span class="n">loads</span><span class="p">,</span> <span class="n">or</span> <span class="n">updates</span> <span class="n">a</span> <span class="n">resource</span> <span class="n">without</span> <span class="n">reloading</span> <span class="n">the</span> <span class="n">page</span><span class="o">.</span>
+<span class="mi">5</span><span class="o">.</span> <span class="no">Must</span> <span class="n">translate</span> <span class="n">the</span> <span class="no">JSON</span> <span class="n">responses</span> <span class="n">into</span> <span class="no">Javascript</span> <span class="no">Model</span> <span class="no">Objects</span><span class="o">.</span> <span class="no">The</span> <span class="no">Model</span> <span class="no">Objects</span> <span class="n">must</span> <span class="n">have</span> <span class="n">at</span> <span class="n">least</span> <span class="n">one</span> <span class="nb">method</span> <span class="n">on</span> <span class="n">the</span> <span class="n">prototype</span><span class="o">.</span> <span class="no">Formatters</span> <span class="n">work</span> <span class="n">really</span> <span class="n">well</span> <span class="k">for</span> <span class="n">this</span><span class="o">.</span>
+
+</code></pre>
+</div>
+
+<p>I’m going to explain my some thought process and what I did to fulfill requiement number two. Essentially, I’ll be overriding the default behavior of a form submission and using AJAX post requests, configuring server responses, and deciding how its being handle.</p>
+
+<p>The first thing we need to do is to tackle the default behavior of the form submission. When a user clicks on a forms submit button, it sends a POST request with its url, the server handles the response, and then the browser redirects to a new route. We want to prevent the browsering redirecting to a new route. So what can we do? Thanks to JQuery we can attach an event listerner to the form to prevent this entire process when the forms submit button is clicked, like so</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>
+<span class="n">function</span> <span class="n">newIngredients</span><span class="p">(){</span>
+  <span class="err">$</span><span class="p">(</span><span class="s2">"#new_ingredient"</span><span class="p">).</span><span class="nf">on</span><span class="p">(</span><span class="s2">"submit"</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">e</span><span class="p">){</span>
+    <span class="n">e</span><span class="p">.</span><span class="nf">preventDefault</span><span class="p">();</span>
+
+    <span class="vg">$.</span><span class="n">ajax</span><span class="p">({</span>
+      <span class="ss">method: </span><span class="s1">'POST'</span><span class="p">,</span>
+      <span class="ss">url: </span><span class="n">this</span><span class="p">.</span><span class="nf">action</span><span class="p">,</span>
+      <span class="ss">data: </span><span class="err">$</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="nf">serialize</span><span class="p">(),</span>
+      <span class="ss">dataType: </span><span class="s1">'json'</span>
+    <span class="p">}).</span><span class="nf">done</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">response</span><span class="p">){</span>
+      <span class="err">$</span><span class="p">(</span><span class="s2">".ingredients ol"</span><span class="p">).</span><span class="nf">append</span><span class="p">(</span><span class="s2">"&lt;li&gt;"</span> <span class="o">+</span> <span class="n">response</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"&lt;/li&gt;"</span><span class="p">);</span>
+      <span class="err">$</span><span class="p">(</span><span class="s2">"#ingredient_name"</span><span class="p">).</span><span class="nf">val</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+
+</code></pre>
+</div>
+
+<p>You can see in the newIngredients function I used a JQuery selector “#new_ingredient”, which is the forms id. The following line is what prevents the entire form from redirecting to a new route.</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>
+<span class="n">e</span><span class="p">.</span><span class="nf">preventDefault</span><span class="p">();</span>
+
+</code></pre>
+</div>
+
+<p>Once this event is triggered, we can starting getting the information needed using a AJAX request. Once the AJAX request is done, we append the the response to the div class “.ingredients”. This completes the form submission and now we’ll go over a bit about the server side of the response.</p>
+
+<p>The form that is being submitted is located in the recipes show page. That form was to add ingredients. Now that form is functional, I decided to render the new ingredients to the recipes show page without the page reloading. I wrote two functions to make this render correctly but will explain what I did one at a time.</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>
+<span class="n">function</span> <span class="n">loadIngredients</span><span class="p">(){</span>
+  <span class="err">$</span><span class="p">(</span><span class="s1">'#recipe_ingredients'</span><span class="p">).</span><span class="nf">html</span><span class="p">(</span><span class="s1">'&lt;h3&gt;Ingredients:&lt;/h3&gt;'</span><span class="p">)</span>
+
+  <span class="vg">$.</span><span class="n">ajax</span><span class="p">({</span>
+    <span class="ss">method: </span><span class="s1">'GET'</span><span class="p">,</span>
+    <span class="ss">dataType: </span><span class="s1">'json'</span><span class="p">,</span>
+    <span class="ss">url: </span><span class="n">this</span><span class="p">.</span><span class="nf">action</span>
+  <span class="p">}).</span><span class="nf">done</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">response</span><span class="p">){</span>
+    <span class="n">grabIngredients</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+
+</code></pre>
+</div>
+
+<p>My loadIngredients function starts off with some JQuery which renders “Ingredients:” before the actual lists. I then make a AJAX request to grab the response. I used a get request to send data to my rails backend and this.action just refers to the current URL. When it recieves the response in JSON, I called grabIngredients function to parse the response.</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>
+<span class="n">function</span> <span class="n">grabIngredients</span><span class="p">(</span><span class="n">data</span><span class="p">){</span> 
+  <span class="n">var</span> <span class="n">ingredients</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"ingredients"</span><span class="p">];</span>
+  <span class="n">var</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="n">var</span> <span class="n">nameId</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="n">var</span> <span class="n">orderIngredients</span> <span class="o">=</span> <span class="s2">"&lt;ol&gt;"</span><span class="p">;</span>
+  
+  <span class="k">for</span> <span class="p">(</span><span class="n">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ingredients</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">names</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">ingredients</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">"name"</span><span class="p">]);</span>
+    <span class="n">nameId</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">ingredients</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">"id"</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nameId</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">orderIngredients</span> <span class="o">+=</span> <span class="s2">"&lt;li&gt;"</span> <span class="o">+</span> <span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"&lt;/li&gt;"</span><span class="p">;</span>
+    
+  <span class="p">}</span>
+  <span class="n">orderIngredients</span> <span class="o">+=</span> <span class="s2">"&lt;/ol&gt;"</span><span class="p">;</span>
+ <span class="err">$</span><span class="p">(</span><span class="s2">".ingredients"</span><span class="p">).</span><span class="nf">html</span><span class="p">(</span><span class="n">orderIngredients</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p>Now that we have the response from our AJAX request, we can now parse the data. We will parse that data by looping through each ingredient, pushing the name and its id to an empty array. We then add another loop whichs goes through each ingredients id in nameId array, which renders the name of ingredients in a list. Finally we append each ingredient to the div class “.ingredients” in our recipes show page.</p>
+
+<p>We now have the ability to add ingredients to our recipe show page without having the page reload. It renders perfectly and pretty fast.</p>
+
+<p>I’m still not really confident in my ability to code but I’m learning a lot and continue to improve. I hope you guys learned something from this blog!</p>
+
+<p>If you want to interact with my application, here’s the github page repo.</p>
+
+<p>https://github.com/pacosta613/recipe-project-jquery</p>
+
+<p>Have Fun! Learn, Love, Code.</p>
+
+</div>
+
+			
+			</div><!-- /.container -->
+			<footer>
+	    		<ul>
+	        		<li><a href="mailto:pedro.acosta613@gmail.com">email pedro.acosta613@gmail.com</a></li>
+	        		<li><a href="https://github.com/pacosta613">github.com/pacosta613</a></li>
+				</ul>
+			</footer>
+		</body>
+	</html>
