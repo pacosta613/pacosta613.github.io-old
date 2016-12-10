@@ -1,11 +1,11 @@
 # Site wide configuration
 
-title: "Pedro fafafa"
-description: "This is a description of my awesome site."
+title: "My Blog"
+description: "A way to catch up on things I've worked on."
 logo: # 120x120 px default image used for Twitter summary card
 teaser: # 400x250 px default teaser image used in image archive grid
 locale: en
-url:
+url: pacosta613.github.io
 feed:
   path: atom.xml
 
@@ -25,15 +25,17 @@ gems:
 
 
 # Site owner
-owner:
-  name:
-  email:
-  twitter:
+owner: 
+  name: Pedro Acosta
+  email: pedro.acosta613@gmail.com
+  twitter: https://twitter.com/PedroAcosta613
+  linkedin: https://www.linkedin.com/in/pedro-j-acosta
+  github: https://github.com/pacosta613
   google:
     ad-client:
     ad-slot:
-  bio:
-  avatar: bio-photo.jpg # 160x160 px image for author byline
+  bio: Recent graduate at the Flatiron school online program, where I've gained my skills in Ruby, Ruby on Rails, Javascript, JQuery, AngularJS, HTML, and CSS. I'm a hard worker and have a passion to learn. I am excited for the future and the opportunities ahead of me to change the world through technology.  Strong passion for learning, video games, and sports.
+  avatar: Profile-pic.jpg # 160x160 px image for author byline
   disqus-shortname:
 
 

@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: "Rails project"
 date: 2016-06-24
 ---

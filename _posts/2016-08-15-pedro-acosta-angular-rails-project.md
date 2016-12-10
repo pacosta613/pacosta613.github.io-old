@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: "Angular/Rails project"
 date: 2016-08-15
 ---

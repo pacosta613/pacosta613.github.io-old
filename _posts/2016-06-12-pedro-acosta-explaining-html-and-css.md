@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: "Explaining html and css"
 date: 2016-06-12
 ---

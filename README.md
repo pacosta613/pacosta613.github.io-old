@@ -1,4 +1,1 @@
-Hey guys!
-
-This is my personal blog. I hope you learn and enjoy some of my stories. Will try to write as much as possible about personal experiences with programming.
-
+Just a little something I'm using to jump start a site refresh. Its a Jekyll site. I copied a Jekyll theme and made it my own. This is my blog. I will be posting programming experiences and tutorials here. 

@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: "Jquery project"
 date: 2016-07-27
 ---

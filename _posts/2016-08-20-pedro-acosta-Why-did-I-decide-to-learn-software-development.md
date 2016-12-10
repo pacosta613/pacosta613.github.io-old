@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: "Why I learned software development"
 date: 2016-08-20
 ---
