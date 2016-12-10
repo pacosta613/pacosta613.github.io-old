@@ -1,15 +1,15 @@
 # Site navigation links
 
 - title: Home
-  url: pacosta613.github.io
+  url: 
   excerpt:
   image:
 
 - title: About
-  url: pacosta613.github.io/About
+  url: /About
 
 - title: Blogs
-  url: pacosta613.github.io/Blogs
+  url: /Blogs
 
 - title: Contact
-  url: pacosta613.github.io/Contact
+  url: /Contact
