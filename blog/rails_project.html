@@ -1,71 +1,58 @@
-<!DOCTYPE html>
-  <html>
-    <head>
-      <title>Rails project</title>
-    </head>
-    <body>
-      <div class="container">
-      
-        <h1>Rails project</h1>
+<div class="post">
+  <p>Hey guys! After a long battle and countless hours of work, I was finally able to complete my rails project. It took me sometime to do. I even had to re-create it just to gain a better perspective on rails. Rails is difficult at first because of all its “magic”, but once you get a deeper understanding of what’s going on in the backend it’ll click right away.</p>
 
-        <div class="post">
-          <p>Hey guys! After a long battle and countless hours of work, I was finally able to complete my rails project. It took me sometime to do. I even had to re-create it just to gain a better perspective on rails. Rails is difficult at first because of all its “magic”, but once you get a deeper understanding of what’s going on in the backend it’ll click right away.</p>
+  <p>This is a pretty simple rails app. It’s a recipe app. The goal was just to allow users to create a recipe along with all of its ingredients. It also allows users to comment and rate on their own or other users recipes. There are some additional features that I will add later on to this app such as giving certain users roles using pundit, which is pretty much allowing and limiting users to deleting other users recipe, comments, ratings etc.</p>
 
-        <p>This is a pretty simple rails app. It’s a recipe app. The goal was just to allow users to create a recipe along with all of its ingredients. It also allows users to comment and rate on their own or other users recipes. There are some additional features that I will add later on to this app such as giving certain users roles using pundit, which is pretty much allowing and limiting users to deleting other users recipe, comments, ratings etc.</p>
+  <p>I’m going to explain my thought process with some of my code and try to explain it in the best techincal way I can. Again, I still don’t consider myself good at programming yet, but I just want to keep working on getting better as best I can.</p>
 
-        <p>I’m going to explain my thought process with some of my code and try to explain it in the best techincal way I can. Again, I still don’t consider myself good at programming yet, but I just want to keep working on getting better as best I can.</p>
+  <p>Using Devise and Omniauth</p>
 
-        <p>Using Devise and Omniauth</p>
+  <p>When you start the application you’re sent to the home page. In order to start creating and seeing other users recipes you will need to register/login into an account. I used two authentications in this app, devise and omniauth.</p>
 
-        <p>When you start the application you’re sent to the home page. In order to start creating and seeing other users recipes you will need to register/login into an account. I used two authentications in this app, devise and omniauth.</p>
+  <p>The devise gem comes with a lot of neat features and it’s highly customizable. It takes care of so many different aspects for you such as controllers, views, mailers, errors, and routes. This is pretty much what a user will need to signin/register themselves with the app. Its a pretty popular gem to use and its pretty dependable.</p>
 
-        <p>The devise gem comes with a lot of neat features and it’s highly customizable. It takes care of so many different aspects for you such as controllers, views, mailers, errors, and routes. This is pretty much what a user will need to signin/register themselves with the app. Its a pretty popular gem to use and its pretty dependable.</p>
+  <p>The Omniauth gem is pretty cool too. Let me explain what it is. Ever go to a website and decide to register with them? When you start the registration it gives you an option to signin with google, twitter, Facebook, etc. Well, thats pretty much the omniauth gem. There are so many omniauth gems available to you but I choose to use facebook. Now users have the options of creating an account with their email or facebook account.</p>
 
-        <p>The Omniauth gem is pretty cool too. Let me explain what it is. Ever go to a website and decide to register with them? When you start the registration it gives you an option to signin with google, twitter, Facebook, etc. Well, thats pretty much the omniauth gem. There are so many omniauth gems available to you but I choose to use facebook. Now users have the options of creating an account with their email or facebook account.</p>
+  <p>Structure</p>
 
-        <p>Structure</p>
+  <p>Now the most difficult part of this project is deciding the structure of your app. There are already guidelines and requirements Learn.co requires inorder for you pass this project. Now that we have the user models, controllers, and views set up, we can start creating how I want the app to function.</p>
 
-        <p>Now the most difficult part of this project is deciding the structure of your app. There are already guidelines and requirements Learn.co requires inorder for you pass this project. Now that we have the user models, controllers, and views set up, we can start creating how I want the app to function.</p>
+  <p>The user should be allowed to create a recipe. The recipe has many ingredients, comments, and rating. FYI I used a gem for the ratings, just wanted to add some pretty jQuery for the ratings. Now even though recipe has many ingredients, I also want the ingredient to have many recipes. For this task, I’ll need a ActiveRecord join table. The join table will be called recipe_ingredients.</p>
 
-        <p>The user should be allowed to create a recipe. The recipe has many ingredients, comments, and rating. FYI I used a gem for the ratings, just wanted to add some pretty jQuery for the ratings. Now even though recipe has many ingredients, I also want the ingredient to have many recipes. For this task, I’ll need a ActiveRecord join table. The join table will be called recipe_ingredients.</p>
+  <p>Recipe model looks like this:</p>
 
-        <p>Recipe model looks like this:</p>
+  <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Recipe</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
 
-        <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Recipe</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:user</span>
+  <span class="n">has_many</span> <span class="ss">:comments</span>
+  <span class="n">has_many</span> <span class="ss">:recipe_ingredients</span>
+  <span class="n">has_many</span> <span class="ss">:ingredients</span><span class="p">,</span> <span class="ss">through: :recipe_ingredients</span>
 
-          <span class="n">belongs_to</span> <span class="ss">:user</span>
-          <span class="n">has_many</span> <span class="ss">:comments</span>
-          <span class="n">has_many</span> <span class="ss">:recipe_ingredients</span>
-          <span class="n">has_many</span> <span class="ss">:ingredients</span><span class="p">,</span> <span class="ss">through: :recipe_ingredients</span>
+  <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:presence</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+  <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:uniqueness</span> <span class="o">=&gt;</span> <span class="kp">true</span>
 
-          <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:presence</span> <span class="o">=&gt;</span> <span class="kp">true</span>
-          <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:uniqueness</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+  <span class="k">end</span>
 
-        <span class="k">end</span>
+  </code></pre>
+  </div>
 
-        </code></pre>
-        </div>
+  <p>Ingredient model looks like this:</p>
 
-        <p>Ingredient model looks like this:</p>
+  <div class="language-ruby highlighter-rouge"><pre class="highlight"><code>
+  <span class="k">class</span> <span class="nc">Ingredient</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">has_many</span> <span class="ss">:recipe_ingredients</span>
+  <span class="n">has_many</span> <span class="ss">:recipes</span><span class="p">,</span> <span class="ss">through: :recipe_ingredients</span>
+  <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:presence</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+  <span class="n">validates_uniqueness_of</span> <span class="ss">:name</span>
+  <span class="k">end</span>
 
-        <div class="language-ruby highlighter-rouge"><pre class="highlight"><code>
-        <span class="k">class</span> <span class="nc">Ingredient</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-          <span class="n">has_many</span> <span class="ss">:recipe_ingredients</span>
-          <span class="n">has_many</span> <span class="ss">:recipes</span><span class="p">,</span> <span class="ss">through: :recipe_ingredients</span>
-          <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:presence</span> <span class="o">=&gt;</span> <span class="kp">true</span>
-          <span class="n">validates_uniqueness_of</span> <span class="ss">:name</span>
-        <span class="k">end</span>
+  </code></pre>
+  </div>
 
-        </code></pre>
-        </div>
+  <p>I went ahead and added some validations to both models just to avoid any dublicate names and make sure the user doesn’t leave any blank spaces in the forms.</p>
 
-        <p>I went ahead and added some validations to both models just to avoid any dublicate names and make sure the user doesn’t leave any blank spaces in the forms.</p>
+  <p>This is what got me started and allowed me to complete this project. It’s a simple app. Feel free to use it. I will soon add some jQuery to the entire app for my next project. I had a lot of headaces and fun building this app and look forward to improving my programming skills.</p>
 
-        <p>This is what got me started and allowed me to complete this project. It’s a simple app. Feel free to use it. I will soon add some jQuery to the entire app for my next project. I had a lot of headaces and fun building this app and look forward to improving my programming skills.</p>
+  <p>Have Fun! Learn, Love, Code.</p>
 
-        <p>Have Fun! Learn, Love, Code.</p>
-
-        </div>
-      </div><!-- /.container -->
-    </body>
-  </html>
+</div>
