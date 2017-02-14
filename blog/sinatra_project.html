@@ -1,162 +1,153 @@
-<!DOCTYPE html>
-  <html>
-    <head>
-      <title>Sinatra project</title>
-    </head>
-    <body>
+<div class="post">
+  <p>Hey guys, this is my second blog and today I’m going to talk about my sinatra project. If you read my first blog, you’ll know that I’m currently a learn student in the Flatiron school. I went ahead and added my sinatra projects github page so you can have access to it.</p>
 
-      <div class="container">
-        <div class="post">
-          <p>Hey guys, this is my second blog and today I’m going to talk about my sinatra project. If you read my first blog, you’ll know that I’m currently a learn student in the Flatiron school. I went ahead and added my sinatra projects github page so you can have access to it.</p>
+  <p>This was my first sinatra project and I had a lot of fun doing it. Those of you new to programming, my word of advice is to not be afraid of challenging yourself. Embrace it. When you do, you’ll learn a lot, have fun, and make an awesome project.</p>
 
-        <p>This was my first sinatra project and I had a lot of fun doing it. Those of you new to programming, my word of advice is to not be afraid of challenging yourself. Embrace it. When you do, you’ll learn a lot, have fun, and make an awesome project.</p>
+  <p>My sinatra project is pretty simple. I allow a user to make an account with the application. When the user makes an account he is able to create a league. What is a league? Well, for those of you who play sports, a league is just an organization where teams can compete against each other. So for every league you create, you can create teams for that league. For every team you create, you can create players, along with their jersey number and position they play.</p>
 
-        <p>My sinatra project is pretty simple. I allow a user to make an account with the application. When the user makes an account he is able to create a league. What is a league? Well, for those of you who play sports, a league is just an organization where teams can compete against each other. So for every league you create, you can create teams for that league. For every team you create, you can create players, along with their jersey number and position they play.</p>
+  <p>If you take a look at my code, you can see that many of the controllers are very similar to each other and follow the same concepts and patterns. Getting each user to create leagues, teams, and players was pretty simple. To be honest, it was really easy. My struggles came down to saving each created player to their respected team. Same goes with the different teams to its league. I’m going to show you what I mean by that in the following code.</p>
 
-        <p>If you take a look at my code, you can see that many of the controllers are very similar to each other and follow the same concepts and patterns. Getting each user to create leagues, teams, and players was pretty simple. To be honest, it was really easy. My struggles came down to saving each created player to their respected team. Same goes with the different teams to its league. I’m going to show you what I mean by that in the following code.</p>
+  <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="c1">#&lt;Player:0x007fb97c2c68d8]</span>
+  <span class="ss">id: </span><span class="mi">1</span><span class="p">,</span>
+  <span class="ss">name: </span><span class="s2">"Pedro Acosta"</span><span class="p">,</span>
+  <span class="ss">team_id: </span><span class="kp">nil</span><span class="p">,</span>
+  <span class="ss">league_id: </span><span class="kp">nil</span><span class="p">,</span>
+  <span class="ss">jersey_number: </span><span class="mi">6</span><span class="p">,</span>
+  <span class="ss">position: </span><span class="s2">"Center Field "</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="c1">#&lt;Player:0x007fb97c2c6748</span>
+  <span class="ss">id: </span><span class="mi">2</span><span class="p">,</span>
+  <span class="ss">name: </span><span class="s2">"Corry Harper"</span><span class="p">,</span>
+  <span class="ss">team_id: </span><span class="kp">nil</span><span class="p">,</span>
+  <span class="ss">league_id: </span><span class="kp">nil</span><span class="p">,</span>
+  <span class="ss">jersey_number: </span><span class="mi">34</span><span class="p">,</span>
+  <span class="ss">position: </span><span class="s2">"Outfield"</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="c1">#&lt;Player:0x007fb97c2c65e0</span>
+  <span class="ss">id: </span><span class="mi">3</span><span class="p">,</span>
+  <span class="ss">name: </span><span class="s2">"Andrew C"</span><span class="p">,</span>
+  <span class="ss">team_id: </span><span class="kp">nil</span><span class="p">,</span>
+  <span class="ss">league_id: </span><span class="kp">nil</span><span class="p">,</span>
+  <span class="ss">jersey_number: </span><span class="mi">15</span><span class="p">,</span>
+  <span class="ss">position: </span><span class="s2">"Catcher"</span><span class="o">&gt;</span>
+  </code></pre>
+  </div>
 
-        <div class="language-ruby highlighter-rouge"><pre class="highlight"><code>          <span class="p">[</span><span class="c1">#&lt;Player:0x007fb97c2c68d8</span>
-                  <span class="ss">id: </span><span class="mi">1</span><span class="p">,</span>
-                  <span class="ss">name: </span><span class="s2">"Pedro Acosta"</span><span class="p">,</span>
-                  <span class="ss">team_id: </span><span class="kp">nil</span><span class="p">,</span>
-                  <span class="ss">league_id: </span><span class="kp">nil</span><span class="p">,</span>
-                  <span class="ss">jersey_number: </span><span class="mi">6</span><span class="p">,</span>
-                  <span class="ss">position: </span><span class="s2">"Center Field "</span><span class="o">&gt;</span><span class="p">,</span>
-                 <span class="c1">#&lt;Player:0x007fb97c2c6748</span>
-                  <span class="ss">id: </span><span class="mi">2</span><span class="p">,</span>
-                  <span class="ss">name: </span><span class="s2">"Corry Harper"</span><span class="p">,</span>
-                  <span class="ss">team_id: </span><span class="kp">nil</span><span class="p">,</span>
-                  <span class="ss">league_id: </span><span class="kp">nil</span><span class="p">,</span>
-                  <span class="ss">jersey_number: </span><span class="mi">34</span><span class="p">,</span>
-                  <span class="ss">position: </span><span class="s2">"Outfield"</span><span class="o">&gt;</span><span class="p">,</span>
-                 <span class="c1">#&lt;Player:0x007fb97c2c65e0</span>
-                  <span class="ss">id: </span><span class="mi">3</span><span class="p">,</span>
-                  <span class="ss">name: </span><span class="s2">"Andrew C"</span><span class="p">,</span>
-                  <span class="ss">team_id: </span><span class="kp">nil</span><span class="p">,</span>
-                  <span class="ss">league_id: </span><span class="kp">nil</span><span class="p">,</span>
-                  <span class="ss">jersey_number: </span><span class="mi">15</span><span class="p">,</span>
-                  <span class="ss">position: </span><span class="s2">"Catcher"</span><span class="o">&gt;</span>
-        </code></pre>
-        </div>
+  <p>As you can see, there are three player objects I created. Did you notice what is wrong with these objects? Well, what’s right about these player objects is that it stored the name, jersey number, and position of each players. What it doesn’t show is the players team id. The return is “nil”.</p>
 
-        <p>As you can see, there are three player objects I created. Did you notice what is wrong with these objects? Well, what’s right about these player objects is that it stored the name, jersey number, and position of each players. What it doesn’t show is the players team id. The return is “nil”.</p>
+  <p>For those of you who haven’t realize yet, I’m using the programming language Ruby. In ruby, there always needs to be a return value. When nothing is returned, you’ll get “nil”. It’s pretty simple, nil is the Ruby object that represents nothingness. So ruby always has a return value.</p>
 
-        <p>For those of you who haven’t realize yet, I’m using the programming language Ruby. In ruby, there always needs to be a return value. When nothing is returned, you’ll get “nil”. It’s pretty simple, nil is the Ruby object that represents nothingness. So ruby always has a return value.</p>
+  <p>The reason it returned nil is because nothing was saved into that object. Which means that my player object didn’t save its team it was assigned to. There lies the problem. I have players object and no way to verify who it belongs to. So what was happening was every team I created, when I was to click on their roster, it will show all of the saved player objects. It didn’t matter what team it was. With the help of the learn developers, I was able to find a solution.</p>
 
-        <p>The reason it returned nil is because nothing was saved into that object. Which means that my player object didn’t save its team it was assigned to. There lies the problem. I have players object and no way to verify who it belongs to. So what was happening was every team I created, when I was to click on their roster, it will show all of the saved player objects. It didn’t matter what team it was. With the help of the learn developers, I was able to find a solution.</p>
+  <div class="highlighter-rouge"><pre class="highlight"><code>  Players Controller:
+    post '/players/:id' do 
+      @player = Player.find_by_id(params[:id])
+      @team = Team.find_by(params[:team_id])
+      @player.team = Team.find_by(params[:team_id])
+      @player.name = params[:name]
+      @player.position = params[:position]
+      @player.jersey_number = params[:jersey_number]
+      @player.save 
 
-        <div class="highlighter-rouge"><pre class="highlight"><code>      Players Controller: ```ruby
-            post '/players/:id' do 
-              @player = Player.find_by_id(params[:id])
-              @team = Team.find_by(params[:team_id])
-              @player.team = Team.find_by(params[:team_id])
-              @player.name = params[:name]
-              @player.position = params[:position]
-              @player.jersey_number = params[:jersey_number]
-              @player.save 
+      redirect "/players/#{@player.id}"
+    end
 
-              redirect "/players/#{@player.id}"
-            end
+    post '/players' do 
+      @player = Player.new
+      @player.team = Team.find_by_id(params[:team_id])
+      @player.name = params[:name]
+      @player.position = params[:position]
+      @player.jersey_number = params[:jersey_number]
+      @player.save
+      #binding.pry
+      redirect "/players/#{@player.id}"
 
-            post '/players' do 
-              @player = Player.new
-              @player.team = Team.find_by_id(params[:team_id])
-              @player.name = params[:name]
-              @player.position = params[:position]
-              @player.jersey_number = params[:jersey_number]
-              @player.save
-              #binding.pry
-              redirect "/players/#{@player.id}"
+    end 
 
-            end ``` In my first post route I added two lines and the second post I added one.
-        </code></pre>
-        </div>
+    In my first post route I added two lines and the second post I added one.
+  </code></pre>
+  </div>
 
-        <div class="language-ruby highlighter-rouge"><pre class="highlight"><code>      <span class="vi">@team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:team_id</span><span class="p">])</span>
-              <span class="vi">@player</span><span class="p">.</span><span class="nf">team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:team_id</span><span class="p">])</span>
-        </code></pre>
-        </div>
+  <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="vi">@team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:team_id</span><span class="p">])</span>
+  <span class="vi">@player</span><span class="p">.</span><span class="nf">team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:team_id</span><span class="p">])</span>
+  </code></pre>
+  </div>
 
-        <p>The first line above is assigning @team instant variable to find the class team by its id. The second line is grabbing the first line and combining it with the @player instant variable. So the @player is looking for its team by its team id.
-        I then had to make some adjustments to my team show view and tested it out.</p>
+  <p>The first line above is assigning @team instant variable to find the class team by its id. The second line is grabbing the first line and combining it with the @player instant variable. So the @player is looking for its team by its team id.
+  I then had to make some adjustments to my team show view and tested it out.</p>
 
-        <div class="language-ruby highlighter-rouge"><pre class="highlight"><code>       <span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-                <span class="o">&lt;</span><span class="sx">% @team.players.each </span><span class="k">do</span> <span class="o">|</span><span class="n">player</span><span class="o">|</span> <span class="sx">%&gt;
-                  &lt;li&gt;</span><span class="o">&lt;</span><span class="sx">%= player.name %&gt;
-                  &lt;%=</span> <span class="n">player</span><span class="p">.</span><span class="nf">position</span> <span class="sx">%&gt; &lt;%= player.jersey_number %&gt;</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-                <span class="o">&lt;%</span> <span class="k">end</span><span class="sx">%&gt;
-              &lt;/ul&gt;</span>
-        </code></pre>
-        </div>
+  <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">% @team.players.each </span><span class="k">do</span> <span class="o">|</span><span class="n">player</span><span class="o">|</span> <span class="sx">%&gt;
+    &lt;li&gt;</span><span class="o">&lt;</span><span class="sx">%= player.name %&gt;
+    &lt;%=</span> <span class="n">player</span><span class="p">.</span><span class="nf">position</span> <span class="sx">%&gt; &lt;%= player.jersey_number %&gt;</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+  <span class="o">&lt;%</span> <span class="k">end</span><span class="sx">%&gt;
+&lt;/ul&gt;</span>
+  </code></pre>
+  </div>
 
-        <p>Here I iterated each player through its team. It then will display each players name, position, and jersey number. It worked! Great news was I was able to mimic this simple pattern on to my teams and league controllers.</p>
+  <p>Here I iterated each player through its team. It then will display each players name, position, and jersey number. It worked! Great news was I was able to mimic this simple pattern on to my teams and league controllers.</p>
 
-        <div class="highlighter-rouge"><pre class="highlight"><code>Teams controller:
-        </code></pre>
-        </div>
+  <div class="highlighter-rouge"><pre class="highlight"><code>Teams controller:
+  </code></pre>
+  </div>
 
-        <div class="language-ruby highlighter-rouge"><pre class="highlight"><code>    <span class="n">post</span> <span class="s1">'/teams/:id'</span> <span class="k">do</span> 
-              <span class="vi">@team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
-              <span class="vi">@league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:league_id</span><span class="p">])</span>
-              <span class="vi">@team</span><span class="p">.</span><span class="nf">league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:league_id</span><span class="p">])</span>
-              <span class="vi">@team</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
-              <span class="vi">@team</span><span class="p">.</span><span class="nf">save</span>
+  <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">post</span> <span class="s1">'/teams/:id'</span> <span class="k">do</span> 
+    <span class="vi">@team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+    <span class="vi">@league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:league_id</span><span class="p">])</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:league_id</span><span class="p">])</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">save</span>
 
-              <span class="n">redirect</span> <span class="s2">"/teams/</span><span class="si">#{</span><span class="vi">@team</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">"</span>
-            <span class="k">end</span>
+    <span class="n">redirect</span> <span class="s2">"/teams/</span><span class="si">#{</span><span class="vi">@team</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
 
-            <span class="n">post</span> <span class="s1">'/teams'</span> <span class="k">do</span> 
-              <span class="vi">@team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">new</span>
-              <span class="vi">@team</span><span class="p">.</span><span class="nf">league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:league_id</span><span class="p">])</span>
-              <span class="vi">@team</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
-              <span class="vi">@team</span><span class="p">.</span><span class="nf">save</span>
+  <span class="n">post</span> <span class="s1">'/teams'</span> <span class="k">do</span> 
+    <span class="vi">@team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">new</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:league_id</span><span class="p">])</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">save</span>
 
-              <span class="n">redirect</span> <span class="s2">"/teams/</span><span class="si">#{</span><span class="vi">@team</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">"</span>
-            <span class="k">end</span>
-        </code></pre>
-        </div>
-        <div class="highlighter-rouge"><pre class="highlight"><code>Leagues controller:
-        </code></pre>
-        </div>
+    <span class="n">redirect</span> <span class="s2">"/teams/</span><span class="si">#{</span><span class="vi">@team</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+  </code></pre>
+  </div>
+  <div class="highlighter-rouge"><pre class="highlight"><code>Leagues controller:
+  </code></pre>
+  </div>
 
-        <div class="language-ruby highlighter-rouge"><pre class="highlight"><code>      <span class="n">post</span> <span class="s1">'/leagues'</span> <span class="k">do</span> 
-                <span class="vi">@league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">new</span>
-                <span class="vi">@league</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
-                <span class="vi">@league</span><span class="p">.</span><span class="nf">save</span>
+  <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">post</span> <span class="s1">'/leagues'</span> <span class="k">do</span> 
+    <span class="vi">@league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">new</span>
+    <span class="vi">@league</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
+    <span class="vi">@league</span><span class="p">.</span><span class="nf">save</span>
 
-                <span class="n">redirect</span> <span class="s2">"/leagues/</span><span class="si">#{</span><span class="vi">@league</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">"</span>
-              <span class="k">end</span>
+    <span class="n">redirect</span> <span class="s2">"/leagues/</span><span class="si">#{</span><span class="vi">@league</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
 
-              <span class="n">post</span> <span class="s1">'/teams'</span> <span class="k">do</span> 
-                <span class="vi">@team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">new</span>
-                <span class="vi">@team</span><span class="p">.</span><span class="nf">league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:league_id</span><span class="p">])</span>
-                <span class="vi">@team</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
-                <span class="vi">@team</span><span class="p">.</span><span class="nf">save</span>
+  <span class="n">post</span> <span class="s1">'/teams'</span> <span class="k">do</span> 
+    <span class="vi">@team</span> <span class="o">=</span> <span class="no">Team</span><span class="p">.</span><span class="nf">new</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">league</span> <span class="o">=</span> <span class="no">League</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:league_id</span><span class="p">])</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span>
+    <span class="vi">@team</span><span class="p">.</span><span class="nf">save</span>
 
-                <span class="n">redirect</span> <span class="s2">"/teams/</span><span class="si">#{</span><span class="vi">@team</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">"</span>
-              <span class="k">end</span>
-        </code></pre>
-        </div>
+    <span class="n">redirect</span> <span class="s2">"/teams/</span><span class="si">#{</span><span class="vi">@team</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+  </code></pre>
+  </div>
 
-        <p>I also tested it out in my leagues show view by applying the same logic.</p>
+  <p>I also tested it out in my leagues show view by applying the same logic.</p>
 
-        <div class="highlighter-rouge"><pre class="highlight"><code>  Leagues show view:
-        </code></pre>
-        </div>
+  <div class="highlighter-rouge"><pre class="highlight"><code> Leagues show view:
+  </code></pre>
+  </div>
 
-        <div class="language-ruby highlighter-rouge"><pre class="highlight"><code>        <span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-                  <span class="o">&lt;</span><span class="sx">% @league.teams.each </span><span class="k">do</span> <span class="o">|</span><span class="n">team</span><span class="o">|</span> <span class="sx">%&gt;
-                    &lt;li&gt;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">"/teams/&lt;%= team.id %&gt;"</span><span class="o">&gt;&lt;</span><span class="sx">%= team.name %&gt;&lt;/a&gt;&lt;/li&gt;
-                  &lt;% end%&gt;
-                &lt;/ul&gt;
-        </span></code></pre>
-        </div>
+  <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="sx">% @league.teams.each </span><span class="k">do</span> <span class="o">|</span><span class="n">team</span><span class="o">|</span> <span class="sx">%&gt;
+    &lt;li&gt;</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">"/teams/&lt;%= team.id %&gt;"</span><span class="o">&gt;&lt;</span><span class="sx">%= team.name %&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;% end%&gt;
+&lt;/ul&gt;
+  </span></code></pre>
+  </div>
 
-        <p>This project was really fun. Especially when I was debugging my player objects and figuring out why it didn’t want to save its team id. It took me a week just to figure that out so that wasn’t really fun. I learned a lot and took risks of my code breaking. I hope someone can make this application useful for themselves.</p>
+  <p>This project was really fun. Especially when I was debugging my player objects and figuring out why it didn’t want to save its team id. It took me a week just to figure that out so that wasn’t really fun. I learned a lot and took risks of my code breaking. I hope someone can make this application useful for themselves.</p>
 
-        <p>Have Fun! Learn, Love, Code.</p>
+  <p>Have Fun! Learn, Love, Code.</p>
 
-        </div>
-      </div><!-- /.container -->
-    </body>
-  </html>
+</div>
