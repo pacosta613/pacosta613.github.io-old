@@ -1,93 +1,83 @@
-<!DOCTYPE html>
-  <html>
-    <head>
-      <title>CLI gem project</title>
-    </head>
-    <body>
-      <div class="container">
-        <div class="post">
-          <p>I finally was able to complete Learns CLI gem project and submitted it online. For those of you who don’t know, in order to compelete this project, you needed to submit a video discussing your code and show some of the process of you coding and submit a blog discussing your code.</p>
+<div class="post">
+  <p>I finally was able to complete Learns CLI gem project and submitted it online. For those of you who don’t know, in order to compelete this project, you needed to submit a video discussing your code and show some of the process of you coding and submit a blog discussing your code.</p>
 
-        <p>This is my first time doing this so I might struggle putting words together. Im going to discuss a couple of methods in this project.</p>
+  <p>This is my first time doing this so I might struggle putting words together. Im going to discuss a couple of methods in this project.</p>
 
-        <p>The first part of the project was in the vegas-cli.rb file. The second was vegas-sports.rb file. Both under the lib directory and vegas_odds folder. Ill add my github link to this project at the end of this blog just so users can interact with it. Ill start to talk about the football method which is in the vegas-cli.rb file.</p>
+  <p>The first part of the project was in the vegas-cli.rb file. The second was vegas-sports.rb file. Both under the lib directory and vegas_odds folder. Ill add my github link to this project at the end of this blog just so users can interact with it. Ill start to talk about the football method which is in the vegas-cli.rb file.</p>
 
-        <div class="highlighter-rouge"><pre class="highlight"><code>  def football
-            football = VegasOdds::Sports.now[0]
-            puts "#{football.title} will be hosted on #{football.date} on Fox sports."
-            puts "#{football.away} vs. #{football.home}."
-            puts "Do you want to see the odds of this game?:"
-            input = gets.chomp
-            if input == "yes"
-              puts "#{football.away} #{football.odd} vs. #{football.home} #{football.odd_2}"
-              puts "Do you want to bet on this game?"
-              input = gets.chomp
-              if input == "yes"
-                bet
-              else input == "no"
-                football
-              end
-            else input == "no"
-              opening_statement
-            end
-          end
-        </code></pre>
-        </div>
-
-        <p>Off the bat it may seem confusing but it really isn’t. Ill explain to you what I did.</p>
-
-        <p>I assigned a local variable to the VegasOdds::Sports class and pushed the #now method with it. If you notice after the now method, there is a bracket with 0; [0]. In the now method, which is located in vegas-sports.rb file, contains three other methods with certain criteria of information. Basically the [0] is calling the first method which is the self.scrape_football method.</p>
-
-        <p>Now that its being called, I have the ability to display certain information from the scrape_football method. All that was left was figuring out what I wanted to be display for the user and how the user was going to interact with it.</p>
-
-        <p>I decided to use puts and variables that were the source of the information I needed. For ex, the football(is the local variable) and the .title method displays the title of the event, which is Superbowl 50.</p>
-
-        <div class="highlighter-rouge"><pre class="highlight"><code>        input = gets.chomp
-        </code></pre>
-        </div>
-
-        <p>What is being done here is, the app is going to take the input the user enters in and depending on the answer of the user, the app will either display a certain information or pushes the user to start from the beginning of the app.</p>
-
-        <div class="highlighter-rouge"><pre class="highlight"><code>if input == "yes"
-          puts "#{football.away} #{football.odd} vs. #{football.home} #{football.odd_2}"
-          puts "Do you want to bet on this game?"
-          input = gets.chomp
-          if input == "yes"
-            bet
-          else input == "no"
-            football
-          end
+  <div class="highlighter-rouge"><pre class="highlight"><code>  def football
+      football = VegasOdds::Sports.now[0]
+      puts "#{football.title} will be hosted on #{football.date} on Fox sports."
+      puts "#{football.away} vs. #{football.home}."
+      puts "Do you want to see the odds of this game?:"
+      input = gets.chomp
+      if input == "yes"
+        puts "#{football.away} #{football.odd} vs. #{football.home} #{football.odd_2}"
+        puts "Do you want to bet on this game?"
+        input = gets.chomp
+        if input == "yes"
+          bet
         else input == "no"
-          opening_statement
+          football
         end
-        </code></pre>
-        </div>
+      else input == "no"
+        opening_statement
+      end
+    end
+  </code></pre>
+  </div>
 
-        <p>The if, elsif, and else statement is what allowed the app to display certain information depending on the input the user gave it. So in the scenario the user said yes, it will display the information it asked for and if the user said no, it will restart the app.</p>
+  <p>Off the bat it may seem confusing but it really isn’t. Ill explain to you what I did.</p>
 
-        <div class="highlighter-rouge"><pre class="highlight"><code>  puts "Do you want to bet on this game?"
-          input = gets.chomp
-          if input == "yes"
-            bet
-          else input == "no"
-            football
-          end
-        </code></pre>
-        </div>
+  <p>I assigned a local variable to the VegasOdds::Sports class and pushed the #now method with it. If you notice after the now method, there is a bracket with 0; [0]. In the now method, which is located in vegas-sports.rb file, contains three other methods with certain criteria of information. Basically the [0] is calling the first method which is the self.scrape_football method.</p>
 
-        <p>Going deeper in this method. Inside the first if statement included another if statment. Essentially recreating more options for the user. When the user saw the odds that were being displayed for the game, it was ask another question:</p>
+  <p>Now that its being called, I have the ability to display certain information from the scrape_football method. All that was left was figuring out what I wanted to be display for the user and how the user was going to interact with it.</p>
 
-        <div class="highlighter-rouge"><pre class="highlight"><code>  puts "Do you want to bet on this game?"
-        </code></pre>
-        </div>
+  <p>I decided to use puts and variables that were the source of the information I needed. For ex, the football(is the local variable) and the .title method displays the title of the event, which is Superbowl 50.</p>
 
-        <p>Depending on the answer the user gave, if input was yes it would call the bet method, which basically allowed the user to bet on the game or person and if input was no, it would force the user to start from the beginning of this method; or in other worlds this particular sport.</p>
+  <div class="highlighter-rouge"><pre class="highlight"><code>        input = gets.chomp
+  </code></pre>
+  </div>
 
-        <p>I used the same concept with the other methods throughout this file. Even though it didnt seem too abstract for me, it did what I originally intended the project to do. I added too much puts but I didnt want the user to fill limited as to what he can do with this app.</p>
+  <p>What is being done here is, the app is going to take the input the user enters in and depending on the answer of the user, the app will either display a certain information or pushes the user to start from the beginning of the app.</p>
 
-        <p>This project was pretty fun. Took me a couple of days to complete due to certain codes which was not responding the way I wanted it to, but I learned a lot.</p>
+  <div class="highlighter-rouge"><pre class="highlight"><code>if input == "yes"
+    puts "#{football.away} #{football.odd} vs. #{football.home} #{football.odd_2}"
+    puts "Do you want to bet on this game?"
+    input = gets.chomp
+    if input == "yes"
+      bet
+    else input == "no"
+      football
+    end
+  else input == "no"
+    opening_statement
+  end
+  </code></pre>
+  </div>
 
-        </div>
-      </div><!-- /.container -->
-    </body>
-  </html>
+  <p>The if, elsif, and else statement is what allowed the app to display certain information depending on the input the user gave it. So in the scenario the user said yes, it will display the information it asked for and if the user said no, it will restart the app.</p>
+
+  <div class="highlighter-rouge"><pre class="highlight"><code>  puts "Do you want to bet on this game?"
+    input = gets.chomp
+    if input == "yes"
+      bet
+    else input == "no"
+      football
+    end
+  </code></pre>
+  </div>
+
+  <p>Going deeper in this method. Inside the first if statement included another if statment. Essentially recreating more options for the user. When the user saw the odds that were being displayed for the game, it was ask another question:</p>
+
+  <div class="highlighter-rouge"><pre class="highlight"><code>  puts "Do you want to bet on this game?"
+  </code></pre>
+  </div>
+
+  <p>Depending on the answer the user gave, if input was yes it would call the bet method, which basically allowed the user to bet on the game or person and if input was no, it would force the user to start from the beginning of this method; or in other worlds this particular sport.</p>
+
+  <p>I used the same concept with the other methods throughout this file. Even though it didnt seem too abstract for me, it did what I originally intended the project to do. I added too much puts but I didnt want the user to fill limited as to what he can do with this app.</p>
+
+  <p>This project was pretty fun. Took me a couple of days to complete due to certain codes which was not responding the way I wanted it to, but I learned a lot.</p>
+
+</div>
